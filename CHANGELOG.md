@@ -1,3 +1,7 @@
-## 1.0.0
+## 0.0.1+2
 
-- Initial version, created by Stagehand
+- Cleaned up code
+
+## 0.0.1+1
+
+- Initial version.
