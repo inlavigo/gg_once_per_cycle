@@ -23,6 +23,27 @@ void main() {
           expect(callCounter, 2);
         });
       });
+
+      test('should not trigger a triggered task, once dispose is called', () {
+        fakeAsync((fake) {
+          // Create an object
+          var callCounter = 0;
+          final callback = () => callCounter++;
+          final triggerOnce = GgOncePerCycle(task: callback);
+
+          // oncPerCycle is undisposed -> triggers are executed
+          triggerOnce.trigger();
+          fake.flushMicrotasks();
+          expect(callCounter, 1);
+
+          // oncePerCycle is disposed -> triggers are not executed anymore
+          final callCounterBefore = callCounter;
+          triggerOnce.dispose();
+          triggerOnce.trigger();
+          fake.flushMicrotasks();
+          expect(callCounter, callCounterBefore);
+        });
+      });
     });
   });
 }

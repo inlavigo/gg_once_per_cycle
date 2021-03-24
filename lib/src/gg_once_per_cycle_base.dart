@@ -6,6 +6,11 @@ class GgOncePerCycle {
   /// The [task] to be triggered only one time in a run loop cycle.
   GgOncePerCycle({required this.task});
 
+  /// Call this method if triggered tasks shoult not be triggered anymore
+  void dispose() {
+    _isDisposed = true;
+  }
+
   /// The task to be triggered
   void Function() task;
 
@@ -19,9 +24,12 @@ class GgOncePerCycle {
     _isTriggered = true;
     scheduleMicrotask(() {
       _isTriggered = false;
-      task();
+      if (!_isDisposed) {
+        task();
+      }
     });
   }
 
   bool _isTriggered = false;
+  bool _isDisposed = false;
 }

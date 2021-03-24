@@ -41,6 +41,15 @@ void main() async {
   // Output:
   // Task 1
   // Task 2
+
+  // Finally dispose the trigger to prevent that things
+  // are executed lately.
+  oncePerCycle.dispose();
+
+  oncePerCycle.trigger();
+
+  // Output:
+  // No output, because previous dispose
 }
 ```
 

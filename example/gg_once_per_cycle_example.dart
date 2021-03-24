@@ -1,3 +1,9 @@
+// @license
+// Copyright (c) 2019 - 2021 Dr. Gabriel Gatzsche. All Rights Reserved.
+//
+// Use of this source code is governed by terms that can be
+// found in the LICENSE file in the root of this package.
+
 import 'package:gg_once_per_cycle/gg_once_per_cycle.dart';
 
 void main() async {
@@ -31,4 +37,12 @@ void main() async {
   // Output:
   // Task 1
   // Task 2
+
+  // Finally dispose the trigger to prevent that things
+  // are executed lately.
+  oncePerCycle.dispose();
+  oncePerCycle.trigger();
+
+  // Output:
+  // No output, because previous dispose
 }
