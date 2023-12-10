@@ -44,6 +44,30 @@ void main() {
           expect(callCounter, callCounterBefore);
         });
       });
+
+      test('should not automatically execute task when isTest is true', () {
+        fakeAsync((fake) {
+          // Create an object
+          var callCounter = 0;
+          callback() => callCounter++;
+          final triggerOnce = GgOncePerCycle(task: callback, isTest: true);
+
+          // oncPerCycle is undisposed -> triggers are executed
+          triggerOnce.trigger();
+
+          // Lets wait.
+          fake.flushMicrotasks();
+
+          // Task is not executed, because isTest is true.
+          expect(callCounter, 0);
+
+          // Trigger the execution manually.
+          triggerOnce.executeNow();
+
+          // Now the task is executed.
+          expect(callCounter, 1);
+        });
+      });
     });
   });
 }

@@ -50,6 +50,24 @@ void main() async {
 
   // Output:
   // No output, because previous dispose
+
+  // ..................................................................
+  // Assume a test where you want to control the execution by yourself
+  var counterBefore = counter;
+  final oncePerCycleTest = GgOncePerCycle(task: task, isTest: true);
+
+  // Trigger
+  oncePerCycleTest.trigger();
+  await Future.delayed(Duration(microseconds: 1));
+
+  // Nothing has happened, because isTest is true.
+  assert(counter == counterBefore);
+
+  // Trigger execution manually
+  oncePerCycleTest.executeNow();
+
+  // Now the task is executed
+  assert(counter == counterBefore + 1);
 }
 ```
 
