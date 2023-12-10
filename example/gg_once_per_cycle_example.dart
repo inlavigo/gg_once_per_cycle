@@ -9,7 +9,7 @@ import 'package:gg_once_per_cycle/gg_once_per_cycle.dart';
 void main() async {
   // Create a task
   var counter = 0;
-  final task = () => print('Task ${++counter}');
+  task() => print('Task ${++counter}');
 
   // Give the task to a OncePerCycle instance
   final oncePerCycle = GgOncePerCycle(task: task);

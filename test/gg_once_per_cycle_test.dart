@@ -9,7 +9,7 @@ void main() {
       test('should be instantiated', () {
         fakeAsync((fake) {
           var callCounter = 0;
-          final callback = () => callCounter++;
+          callback() => callCounter++;
           final triggerOnce = GgOncePerCycle(task: callback);
           triggerOnce.trigger();
           triggerOnce.trigger();
@@ -28,7 +28,7 @@ void main() {
         fakeAsync((fake) {
           // Create an object
           var callCounter = 0;
-          final callback = () => callCounter++;
+          callback() => callCounter++;
           final triggerOnce = GgOncePerCycle(task: callback);
 
           // oncPerCycle is undisposed -> triggers are executed
