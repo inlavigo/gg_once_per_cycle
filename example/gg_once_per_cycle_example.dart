@@ -63,4 +63,19 @@ void main() async {
 
   // Now the task is executed
   assert(counter == counterBefore + 1);
+
+  // ..................................................
+  // Use Future.microtask instead of scheduleMicrotask
+  counterBefore = counter;
+  final ownScheduleMethodTest = GgOncePerCycle(
+    task: task,
+    scheduleTask: Future.microtask,
+  );
+
+  // Trigger
+  ownScheduleMethodTest.trigger();
+  await Future.delayed(Duration(microseconds: 1));
+
+  // Now the task is executed
+  assert(counter == counterBefore + 1);
 }

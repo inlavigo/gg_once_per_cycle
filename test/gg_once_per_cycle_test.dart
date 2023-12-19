@@ -68,6 +68,52 @@ void main() {
           expect(callCounter, 1);
         });
       });
+
+      test('should use scheduleTask callback when given in constructor', () {
+        // Create an object
+        var callCounter = 0;
+        callback() => callCounter++;
+        var didUseOurScheduleMethod = false;
+
+        void scheduleTask(void Function() task) {
+          task();
+          didUseOurScheduleMethod = true;
+        }
+
+        final triggerOnce = GgOncePerCycle(
+          task: callback,
+          scheduleTask: scheduleTask,
+        );
+
+        // Trigger the task
+        triggerOnce.trigger();
+
+        // Now the task is executed immedediately
+        expect(callCounter, 1);
+        expect(didUseOurScheduleMethod, isTrue);
+      });
+
+      test('should use scheduleTask callback when given in trigger', () {
+        // Create an object
+        var callCounter = 0;
+        callback() => callCounter++;
+
+        var didUseOurScheduleMethod = false;
+
+        void scheduleTask(void Function() task) {
+          task();
+          didUseOurScheduleMethod = true;
+        }
+
+        final triggerOnce = GgOncePerCycle(task: callback);
+
+        // Trigger the task with defining a scheduleTask method
+        triggerOnce.trigger(scheduleTask: scheduleTask);
+
+        // Now the task is executed immedediately
+        expect(callCounter, 1);
+        expect(didUseOurScheduleMethod, isTrue);
+      });
     });
   });
 }

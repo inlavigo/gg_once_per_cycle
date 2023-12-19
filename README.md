@@ -13,7 +13,7 @@ import 'package:gg_once_per_cycle/gg_once_per_cycle.dart';
 void main() async {
   // Create a task
   var counter = 0;
-  final task = () => print('Task ${++counter}');
+  task() => print('Task ${++counter}');
 
   // Give the task to a OncePerCycle instance
   final oncePerCycle = GgOncePerCycle(task: task);
@@ -45,7 +45,6 @@ void main() async {
   // Finally dispose the trigger to prevent that things
   // are executed lately.
   oncePerCycle.dispose();
-
   oncePerCycle.trigger();
 
   // Output:
@@ -65,6 +64,21 @@ void main() async {
 
   // Trigger execution manually
   oncePerCycleTest.executeNow();
+
+  // Now the task is executed
+  assert(counter == counterBefore + 1);
+
+  // ..................................................
+  // Use Future.microtask instead of scheduleMicrotask
+  counterBefore = counter;
+  final ownScheduleMethodTest = GgOncePerCycle(
+    task: task,
+    scheduleTask: Future.microtask,
+  );
+
+  // Trigger
+  ownScheduleMethodTest.trigger();
+  await Future.delayed(Duration(microseconds: 1));
 
   // Now the task is executed
   assert(counter == counterBefore + 1);

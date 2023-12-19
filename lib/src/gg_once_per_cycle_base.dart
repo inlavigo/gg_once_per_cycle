@@ -7,7 +7,14 @@ class GgOncePerCycle {
   ///
   /// If [isTest] is true, task will not be executed automatically.
   /// In that case call [executeNow()].
-  GgOncePerCycle({required this.task, this.isTest = false});
+  ///
+  /// If [scheduleTask] callback is set, tasks will be scheduled using this
+  /// function. Otherwise dart's [scheduleMicrotask] will be used.
+  GgOncePerCycle({
+    required this.task,
+    this.isTest = false,
+    this.scheduleTask = scheduleMicrotask,
+  });
 
   /// Call this method if triggered tasks shoult not be triggered anymore
   void dispose() {
@@ -19,7 +26,11 @@ class GgOncePerCycle {
 
   /// This method triggers the task, but only if it has not already been
   /// executed during this run loop cycle.
-  void trigger() {
+  ///
+  /// [If scheduleTask is set, this method will used to trigger the task]
+  void trigger({
+    Function(void Function() task)? scheduleTask,
+  }) {
     if (_isTriggered) {
       return;
     }
@@ -30,7 +41,7 @@ class GgOncePerCycle {
       return;
     }
 
-    scheduleMicrotask(_scheduledTask);
+    (scheduleTask ?? this.scheduleTask).call(_scheduledTask);
   }
 
   /// The task will only be triggered once in a cycle.
@@ -47,4 +58,6 @@ class GgOncePerCycle {
       task();
     }
   }
+
+  late Function(void Function() task) scheduleTask;
 }
