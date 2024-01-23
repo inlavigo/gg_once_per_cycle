@@ -9,7 +9,7 @@ import 'package:gg_once_per_cycle/gg_once_per_cycle.dart';
 void main() async {
   // Create a task
   var counter = 0;
-  task() => print('Task ${++counter}');
+  void task() => print('Task ${++counter}');
 
   // Give the task to a OncePerCycle instance
   final oncePerCycle = GgOncePerCycle(task: task);
@@ -20,7 +20,7 @@ void main() async {
   oncePerCycle.trigger();
 
   // Wait for the next cycle
-  await Future.delayed(Duration(microseconds: 1));
+  await Future<void>.delayed(const Duration(microseconds: 1));
 
   // The task has only called one time
   assert(counter == 1);
@@ -29,7 +29,7 @@ void main() async {
   oncePerCycle.trigger();
   oncePerCycle.trigger();
 
-  await Future.delayed(Duration(microseconds: 1));
+  await Future<void>.delayed(const Duration(microseconds: 1));
 
   // And again the task has called only one other time
   assert(counter == 2);
@@ -53,7 +53,7 @@ void main() async {
 
   // Trigger
   oncePerCycleTest.trigger();
-  await Future.delayed(Duration(microseconds: 1));
+  await Future<void>.delayed(const Duration(microseconds: 1));
 
   // Nothing has happened, because isTest is true.
   assert(counter == counterBefore);
@@ -74,7 +74,7 @@ void main() async {
 
   // Trigger
   ownScheduleMethodTest.trigger();
-  await Future.delayed(Duration(microseconds: 1));
+  await Future<void>.delayed(const Duration(microseconds: 1));
 
   // Now the task is executed
   assert(counter == counterBefore + 1);

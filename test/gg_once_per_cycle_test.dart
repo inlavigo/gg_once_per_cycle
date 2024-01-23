@@ -9,7 +9,7 @@ void main() {
       test('should be instantiated', () {
         fakeAsync((fake) {
           var callCounter = 0;
-          callback() => callCounter++;
+          int callback() => callCounter++;
           final triggerOnce = GgOncePerCycle(task: callback);
           triggerOnce.trigger();
           triggerOnce.trigger();
@@ -28,7 +28,7 @@ void main() {
         fakeAsync((fake) {
           // Create an object
           var callCounter = 0;
-          callback() => callCounter++;
+          int callback() => callCounter++;
           final triggerOnce = GgOncePerCycle(task: callback);
 
           // oncPerCycle is undisposed -> triggers are executed
@@ -49,7 +49,7 @@ void main() {
         fakeAsync((fake) {
           // Create an object
           var callCounter = 0;
-          callback() => callCounter++;
+          int callback() => callCounter++;
           final triggerOnce = GgOncePerCycle(task: callback, isTest: true);
 
           // oncPerCycle is undisposed -> triggers are executed
@@ -72,7 +72,7 @@ void main() {
       test('should use scheduleTask callback when given in constructor', () {
         // Create an object
         var callCounter = 0;
-        callback() => callCounter++;
+        int callback() => callCounter++;
         var didUseOurScheduleMethod = false;
 
         void scheduleTask(void Function() task) {
@@ -96,7 +96,7 @@ void main() {
       test('should use scheduleTask callback when given in trigger', () {
         // Create an object
         var callCounter = 0;
-        callback() => callCounter++;
+        int callback() => callCounter++;
 
         var didUseOurScheduleMethod = false;
 

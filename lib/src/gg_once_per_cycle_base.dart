@@ -29,7 +29,7 @@ class GgOncePerCycle {
   ///
   /// [If scheduleTask is set, this method will used to trigger the task]
   void trigger({
-    Function(void Function() task)? scheduleTask,
+    void Function(void Function() task)? scheduleTask,
   }) {
     if (_isTriggered) {
       return;
@@ -50,6 +50,8 @@ class GgOncePerCycle {
 
   bool _isTriggered = false;
   bool _isDisposed = false;
+
+  /// Returns true if this is run in a test environmen
   final bool isTest;
 
   void _scheduledTask() {
@@ -59,5 +61,6 @@ class GgOncePerCycle {
     }
   }
 
-  late Function(void Function() task) scheduleTask;
+  /// Use this method to schedule a task
+  late void Function(void Function() task) scheduleTask;
 }

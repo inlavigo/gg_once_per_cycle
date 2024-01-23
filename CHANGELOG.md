@@ -1,5 +1,11 @@
 # Change Log
 
+## 1.3.2
+
+- Update minimum SDK version
+- Update check scripts & VSCode settings
+- Fix warnings
+
 ## 1.3.1
 
 Add a `scheduleTask` callback via constructor or via `trigger()` to specify a own
