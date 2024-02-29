@@ -1,5 +1,5 @@
 import 'package:fake_async/fake_async.dart';
-import 'package:gg_once_per_cycle/gg_once_per_cycle.dart';
+import 'package:gg_once_per_cycle/src/gg_once_per_cycle.dart';
 import 'package:test/test.dart';
 
 void main() {
